@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 from tkinter import *
 import random
-import tkinter as tk
 import tkinter.messagebox as msgbox
+import time
 
 
 class Hangman:
@@ -20,6 +20,8 @@ class Hangman:
             """
 
         # defining class variables
+
+
         self.wordfile = open('files\\words.txt', "r+")
         self.userfile = open("files\\users.txt", "r+")
         self.adminfile = open("files\\admins.txt", "r+")
@@ -44,7 +46,7 @@ class Hangman:
         self.warning = 3
         self.guessed_aplha = ""
         # LoginWindow defined
-        self.loginwindow = tk.Tk()
+        self.loginwindow = Tk()
         self.loginwindow.configure(
             background="#323232",
             height=200,
@@ -54,10 +56,10 @@ class Hangman:
         )
         self.loginwindow.title("Login or SignUp")
         # Admin Frame
-        self.admin_frame = tk.Frame(self.loginwindow)
+        self.admin_frame = Frame(self.loginwindow)
         self.admin_frame.configure(
             height=200, padx=70, pady=70, width=200, bg="#323232")
-        self.adminlabel = tk.Label(self.admin_frame)
+        self.adminlabel = Label(self.admin_frame)
         self.adminlabel.configure(
             background="#323232",
             font=("Cartograph CF", 20),
@@ -66,7 +68,7 @@ class Hangman:
         self.adminlabel.pack(pady=30, side="top")
 
         # Admin Entry for username
-        self.admin_username = tk.Entry(self.admin_frame)
+        self.admin_username = Entry(self.admin_frame)
         self.admin_username.configure(font=("Cartograph CF", 12), width=30)
         _text_ = 'Enter Username'
         self.admin_username.delete("0", "end")
@@ -74,25 +76,25 @@ class Hangman:
         self.admin_username.pack(pady=3, side="top")
 
         # Admin Entry for password
-        self.admin_password = tk.Entry(self.admin_frame)
-        self.admin_password.configure(font=("Cartograph CF", 12), width=30)
+        self.admin_password = Entry(self.admin_frame)
+        self.admin_password.configure(font=("Cartograph CF", 12), width=30, show="*")
         _text_ = 'Enter Password'
         self.admin_password.delete("0", "end")
         self.admin_password.insert("0", _text_)
         self.admin_password.pack(padx=3, side="top")
 
         # Admin Submit Button
-        self.admin_submit = tk.Button(self.admin_frame)
+        self.admin_submit = Button(self.admin_frame)
         self.admin_submit.configure(text='Submit')
         self.admin_submit.pack(pady=17, side="top")
         self.admin_submit.configure(command=self.admin_login)
         self.admin_frame.grid(column=0, padx=30, row=0)
 
         # Userframe Defined
-        self.user_frame = tk.Frame(self.loginwindow)
+        self.user_frame = Frame(self.loginwindow)
         self.user_frame.configure(
             height=200, padx=70, pady=70, width=200, bg="#323232")
-        self.user_label = tk.Label(self.user_frame)
+        self.user_label = Label(self.user_frame)
         self.user_label.configure(
             background="#323232",
             font=("Cartograph CF", 20),
@@ -101,7 +103,7 @@ class Hangman:
         self.user_label.grid(column=0, columnspan=2, pady=30, row=0)
 
         # Entry Field for User Username
-        self.user_username = tk.Entry(self.user_frame)
+        self.user_username = Entry(self.user_frame)
         self.user_username.configure(font=("Cartograph CF", 12), width=30)
         _text_ = 'Enter Username'
         self.user_username.delete("0", "end")
@@ -109,21 +111,21 @@ class Hangman:
         self.user_username.grid(column=0, columnspan=2, padx=3, row=1)
 
         # Entry Field for User Password
-        self.user_password = tk.Entry(self.user_frame)
-        self.user_password.configure(font=("Cartograph CF", 12), width=30)
+        self.user_password = Entry(self.user_frame)
+        self.user_password.configure(font=("Cartograph CF", 12), width=30, show="*")
         _text_ = 'Enter Password'
         self.user_password.delete("0", "end")
         self.user_password.insert("0", _text_)
         self.user_password.grid(column=0, columnspan=2, padx=3, row=2)
 
         # User Submit button
-        self.user_submit = tk.Button(self.user_frame)
+        self.user_submit = Button(self.user_frame)
         self.user_submit.configure(text='Submit', width=18)
         self.user_submit.grid(column=0, row=3)
         self.user_submit.configure(command=self.user_login)
 
         # User Register button
-        self.user_regis = tk.Button(self.user_frame)
+        self.user_regis = Button(self.user_frame)
         self.user_regis.configure(text='Register?', width=18)
         self.user_regis.grid(column=1, row=3)
         self.user_regis.configure(command=self.user_register)
@@ -180,15 +182,15 @@ class Hangman:
         return: None"""
 
         # Register Window Initialized
-        self.register_window = tk.Tk()
+        self.register_window = Tk()
         self.register_window.configure(bg="#323232")
         self.register_window.minsize(width=800, height=600)
         # Register Frame for Registering
-        self.register_frame = tk.Frame(self.register_window)
+        self.register_frame = Frame(self.register_window)
 
         self.register_frame.configure(
             height=200, padx=70, pady=70, width=200, bg="#323232")
-        self.registerlabel = tk.Label(self.register_frame)
+        self.registerlabel = Label(self.register_frame)
         self.registerlabel.configure(
             background="#323232",
             font=("Cartograph CF", 20),
@@ -197,33 +199,33 @@ class Hangman:
         self.registerlabel.pack(pady=30, side="top")
 
         # Register Entry for username
-        self.register_username = tk.Entry(self.register_frame)
+        self.register_username = Entry(self.register_frame)
         self.register_username.configure(font=("Cartograph CF", 12), width=30)
         self.register_username.delete("0", "end")
         self.register_username.insert("0", 'Enter Username')
         self.register_username.pack(pady=3, side="top")
 
-        self.register_firstname = tk.Entry(self.register_frame)
+        self.register_firstname = Entry(self.register_frame)
         self.register_firstname.configure(font=("Cartograph CF", 12), width=30)
         self.register_firstname.delete("0", "end")
         self.register_firstname.insert("0", 'Enter First Name')
         self.register_firstname.pack(pady=3, side="top")
 
-        self.register_lastname = tk.Entry(self.register_frame)
+        self.register_lastname = Entry(self.register_frame)
         self.register_lastname.configure(font=("Cartograph CF", 12), width=30)
         self.register_lastname.delete("0", "end")
         self.register_lastname.insert("0", 'Enter Last Name')
         self.register_lastname.pack(pady=3, side="top")
 
         # Register Entry for password
-        self.register_password = tk.Entry(self.register_frame)
+        self.register_password = Entry(self.register_frame)
         self.register_password.configure(font=("Cartograph CF", 12), width=30)
         self.register_password.delete("0", "end")
         self.register_password.insert("0", 'Enter Password')
         self.register_password.pack(padx=3, side="top")
 
         # Register Submit Button
-        self.register_submit = tk.Button(self.register_frame)
+        self.register_submit = Button(self.register_frame)
         self.register_submit.configure(text='Submit')
         self.register_submit.pack(pady=17, side="top")
         self.register_submit.configure(command=self.add_user)
@@ -236,19 +238,19 @@ class Hangman:
         Calls many functions to help in maintaing the game
 
         returns: None"""
-        self.maingame = tk.Tk()
+        self.maingame = Tk()
         self.maingame.configure(
             background="#323232",
             height=600,
             padx=30,
             pady=30,
             width=800)
-        self.maingame.minsize(800, 600)
+
         self.maingame.title("Hangman")
-        self.alphabet_entry = tk.Entry(self.maingame)
+        self.alphabet_entry = Entry(self.maingame)
         self.alphabet_entry.configure(font=("Cartograph CF", 25), width=7)
         self.alphabet_entry.grid(column=1, columnspan=6, row=1)
-        self.alphabet = tk.Label(self.maingame)
+        self.alphabet = Label(self.maingame)
         self.alphabet.configure(
             background="#323232",
             font=("Cartograph CF", 20),
@@ -256,7 +258,7 @@ class Hangman:
             text='Enter an alphabet')
         self.alphabet.grid(column=1, columnspan=5, padx=30, row=0)
 
-        self.displayword = tk.Label(self.maingame)
+        self.displayword = Label(self.maingame)
         self.displayword.configure(
             background="#323232",
             borderwidth=2,
@@ -282,48 +284,51 @@ class Hangman:
             file="CODE\\images\\hangmanloss.png", master=self.maingame)
 
         self.displayword.grid(row=5, column=3)
-        self.guessedlwordslabel = tk.Label(self.maingame)
+        self.guessedlwordslabel = Label(self.maingame)
         self.guessedlwordslabel.configure(
             background="#323232",
             borderwidth=2,
             font=("Cartograph CF", 14, 'bold'),
             foreground="#F8F8F6",
             text=f"The length of the word is {len(self.s_word)}\nGuessed Words:",
-            padx = 10
+            padx=10
         )
         self.guessedlwordslabel.grid(column=3, row=2)
-        self.guessed = tk.Label(self.maingame)
+        self.guessed = Label(self.maingame)
         self.guessed.configure(background="#323232",
                                foreground="#F8F8F6",
                                font=("Cartograph CF", 14, "bold"),
                                text=self.guessed_aplha)
         self.guessed.grid(column=3, row=4)
-        self.guesses = tk.Label(self.maingame)
+        self.guesses = Label(self.maingame)
         self.guesses.configure(
             background="#323232",
             font=("Cartograph CF", 14, "bold"),
             foreground="#F8F8F6",
             text=f'Guesses remaining:  {self.guess}')
         self.guesses.grid(column=0, pady=20, row=9)
-        self.warnings = tk.Label(self.maingame)
+        self.warnings = Label(self.maingame)
         self.warnings.configure(
             background="#323232",
             font=("Cartograph CF", 14, "bold"),
             foreground="#F8F8F6",
             text=f'Warnings remaining: {self.warning}')
         self.warnings.grid(column=0, pady=20, row=10)
-        self.hangmanimage = tk.Label(self.maingame)
-        self.img_hangmanlogo = tk.PhotoImage(file="CODE\\images\\hangman1.png")
+        self.hangmanimage = Label(self.maingame)
+        self.img_hangmanlogo = PhotoImage(file="CODE\\images\\hangman1.png")
         self.hangmanimage.configure(image=self.img_hangmanlogo)
         self.hangmanimage.grid(column=0, row=0, rowspan=9)
-        self.checkbutton = tk.Button(self.maingame,
-                                     text='Guess Letter',
-                                     padx=30,
-                                     pady=10,
-                                     font=("Cartograph CF", 14),
-                                     command=self.check_word
-                                     )
+        self.checkbutton = Button(self.maingame,
+                                  text='Guess Letter',
+                                  padx=30,
+                                  pady=10,
+                                  font=("Cartograph CF", 14),
+                                  command=self.check_word
+                                  )
         self.checkbutton.grid(column=3, row=6)
+
+        # Binds enter button to the entry box
+        self.alphabet_entry.bind("<Return>", lambda call_event: self.check_word()) # here lambda is used to pass the a function such that a function is called by a function
         self.maingame.mainloop()
 
     def admin_interface(self):
@@ -333,25 +338,25 @@ class Hangman:
 
         returns: None"""
         # Admin Window Initialized
-        self.adminwindow = tk.Tk()
+        self.adminwindow = Tk()
         self.adminwindow.configure(
             background="#323232", height=200, width=200, padx=30, pady=30)
         self.adminwindow.title("Admin Window")
 
         # Entry Box for Words
-        self.wordbox = tk.Entry(self.adminwindow)
+        self.wordbox = Entry(self.adminwindow)
         self.wordbox.configure(font=("Cartograph CF", 15))
         self.wordbox.grid(row=1, column=2)
 
         # Save to file button  for words
-        self.save_button = tk.Button(self.adminwindow)
+        self.save_button = Button(self.adminwindow)
         self.save_button.configure(
             state="normal", text='Save Words', font=("Cartograph CF", 15))
         self.save_button.grid(column=2, ipadx=20, pady=20, row=2)
         self.save_button.configure(command=self.save_words)
 
         # Text Box for highscores
-        self.highscores_txt = tk.Text(self.adminwindow)
+        self.highscores_txt = Text(self.adminwindow)
         self.highscores_txt.configure(
             font=("Cartograph CF", 12),
             foreground="#323232",
@@ -360,7 +365,7 @@ class Hangman:
         self.highscores_txt.grid(column=0, row=1, columnspan=2)
 
         # Words label
-        self.Words = tk.Label(self.adminwindow)
+        self.Words = Label(self.adminwindow)
         self.Words.configure(
             background="#323232",
             font=("Cartograph CF", 20),
@@ -370,7 +375,7 @@ class Hangman:
         self.Words.grid(column=2, row=0)
 
         # Highscore label
-        self.Highscores = tk.Label(self.adminwindow)
+        self.Highscores = Label(self.adminwindow)
         self.Highscores.configure(
             background="#323232",
             font=("Cartograph CF", 20),
@@ -379,13 +384,13 @@ class Hangman:
         self.Highscores.grid(column=0, padx=33, pady=2, row=0)
 
         # Save to file button for Highscores
-        self.save_highscore = tk.Button(self.adminwindow)
+        self.save_highscore = Button(self.adminwindow)
         self.save_highscore.configure(text='Reset Highscores',
                                       fg="#323232",
                                       font=("Cartograph CF", 15))
         self.save_highscore.grid(column=0, ipadx=20, pady=20, row=2)
         self.save_highscore.configure(command=self.reset_high)
-        self.open_highscore = tk.Button(self.adminwindow)
+        self.open_highscore = Button(self.adminwindow)
         self.open_highscore.configure(text='Open Highscores',
                                       fg="#323232",
                                       font=("Cartograph CF", 15))
@@ -402,7 +407,7 @@ class Hangman:
         returns: None"""
         self.highscorefile = open("files\\highscores.csv", "r+")
         self.high = self.highscorefile.read()
-        self.highscores_txt.insert(tk.END, self.high)
+        self.highscores_txt.insert(END, self.high)
 
     def save_words(self):
         """
@@ -424,6 +429,9 @@ class Hangman:
         Allows admin to reset the highscore and delete every highscore"""
         self.highscorefile.truncate(0)
         self.highscorefile.flush()
+        self.highscores_txt.delete(0, END)
+        self.highscores_txt.insert(0, "")
+        msgbox.showinfo(title='Successfull', text="Reset Higsores")
 
     def obscureword(self):
         """
@@ -467,7 +475,7 @@ class Hangman:
             self.userfile.flush()
             msgbox.showinfo(title="Successful",
                             message=f"Added the User: {self.current_username}")
-            
+
             self.register_window.destroy()
             self.loginwindow.destroy()
             self.game()
@@ -483,7 +491,7 @@ class Hangman:
         returns: None
         """
         self.G = self.alphabet_entry.get().lower()
-        self.alphabet_entry.delete(0, tk.END)
+        self.alphabet_entry.delete(0, END)
         self.alphabet_entry.insert(0, "")
 
         if len(self.G) != 1:
@@ -493,11 +501,12 @@ class Hangman:
 
         if self.G in self.guessed_aplha:
             msgbox.showerror(title="Guess", message="Already Guessed")
-            if self.warning<1:
-                self.guess-=1
+            if self.warning < 1:
+                self.guess -= 1
                 self.guesses.configure(text=f"Guesses remaining: {self.guess}")
                 self.displayimage()
-            else: self.warning -= 1
+            else:
+                self.warning -= 1
             self.warnings.configure(text=f"Warnings remaining: {self.warning}")
 
         elif (len(self.G) == 1) and (self.G in self.s_word):
@@ -517,12 +526,13 @@ class Hangman:
 
         else:
             msgbox.showerror(title="Guess", message="We only allow alphabets")
-            if self.warning<1:
-                self.guess-=1
+            if self.warning < 1:
+                self.guess -= 1
                 self.guesses.configure(text=f"Guesses remaining: {self.guess}")
                 self.displayimage()
-                    
-            else: self.warning -= 1
+
+            else:
+                self.warning -= 1
             self.warnings.configure(text=f"Warnings remaining: {self.warning}")
         self.displayword.configure(text=self.obscureword())
         self.guessed.configure(text=self.guessed_aplha)
@@ -533,7 +543,7 @@ class Hangman:
                 title="Sorry", message=f"The word was: {self.s_word}")
             self.lostgame()
         if self.obscureword() == self.prep_secret():
-            msgbox.showinfo(title="CONGRAGULATIONS", message="You Won!")
+            msgbox.showinfo(title=f"CONGRAGULATIONS {self.current_username}", message="You Won!")
             self.wongame()
 
     def lostgame(self):
@@ -568,10 +578,11 @@ class Hangman:
         self.score = self.guess * self.uniques()
 
         # Won Window made
-        self.wonwindow = tk.Tk()
+        self.wonwindow = Tk()
+        self.wonwindow.title("Congragulations")
         self.wonwindow.configure(background="#323232", height=200, width=200)
-        self.wonwindow.minsize(width=800,height=600)
-        self.won = tk.Label(self.wonwindow)
+        self.wonwindow.minsize(width=800, height=600)
+        self.won = Label(self.wonwindow)
         self.won.configure(
             background="#323232",
             font=("Cartograph CF", 48),
@@ -581,12 +592,13 @@ class Hangman:
 
         # Score Label
         self.scorelabel = Label(self.wonwindow,
-                                    background="#323232",
-                                    font=("Cartograph CF", 48),
-                                    foreground="#F8F8f6",
-                                    text=f"YOUR SCORE IS {self.score}")
-        if len(self.highscores)==0 or self.score>int(max(self.highscores)):
-            self.scorelabel.configure(text=f"CONGRAGULATIONS! A NEW HIGHSCORE\n SCORE IS {self.score}")
+                                background="#323232",
+                                font=("Cartograph CF", 48),
+                                foreground="#F8F8f6",
+                                text=f"YOUR SCORE IS {self.score}")
+        if len(self.highscores) == 0 or self.score > int(max(self.highscores)):
+            self.scorelabel.configure(
+                text=f"CONGRAGULATIONS {self.current_username}! A NEW HIGHSCORE\n SCORE IS {self.score}")
 
         self.scorelabel.pack()
 
@@ -599,16 +611,15 @@ class Hangman:
         self.highscorelabel.pack()
 
         # Highscore checking and storing
-        if len(self.highscores)>=3 and self.score<min(self.highscores):
+        if len(self.highscores) >= 3 and self.score < min(self.highscores):
             pass
         elif self.score >= int(self.highscorers.get(self.current_username, -1)):
-            self.highscorers[self.current_username] = self.score       
-        elif self.score> min(self.highscores):
-            print("Possible")
+            self.highscorers[self.current_username] = self.score
+        elif self.score > min(self.highscores):
             keys = list(self.highscorers.keys())
             del self.highscorers[keys[2]]
             self.highscorers[self.current_username] = self.score
-        self.highscores_txt = tk.Text(self.wonwindow)
+        self.highscores_txt = Text(self.wonwindow)
         self.highscores_txt.configure(
             font=("Cartograph CF", 20),
             background="#323232",
@@ -618,6 +629,15 @@ class Hangman:
         self.save_highscores()
         self.open_highscores()  # opens highscore in the text box
         self.highscores_txt.pack()
+        
+        dec = msgbox.askyesno(title="Play Again?", message='Do you want to play again?')
+        print(type(dec))
+        if dec:
+            self.wonwindow.destroy()
+            play()
+        else:
+            self.wonwindow.destroy()
+            self.goodbye()
 
     def uniques(self):
         """
@@ -628,7 +648,7 @@ class Hangman:
         """
 
         uni = []
-        for i in s_word:
+        for i in self.s_word:
             if i not in uni:
                 uni += i
         return len(uni)
@@ -638,8 +658,26 @@ class Hangman:
         Initializes the GoodBye Screen
 
         """
-        goodbyewindow = tk.Tk()
-
+        goodbyewindow = Tk()
+        goodbyewindow.title("Goodbye\u1F44")
+        goodbyewindow.configure(background='#323232')
+        goodbyelabel = Label(goodbyewindow)
+        goodbyelabel.configure(
+            text="Thanks For Playing",
+            font=("Cartograph CF", 32),
+            background="#323232",
+            foreground="#F8F8F6")
+        goodbyelabel.pack()
+        goodbyeimage = PhotoImage(
+            master=goodbyewindow, file="CODE\\goodbye.gif")
+        goodbyeimagelabel = Label(goodbyewindow,
+            image=goodbyeimage,
+            text="Good Bye", 
+            compound=TOP,
+            font=("Cartograph CF", 32),
+            background="#323232",
+            foreground="#F8F8F6")
+        goodbyeimagelabel.pack()
         goodbyewindow.mainloop()
 
     def displayimage(self):
@@ -653,38 +691,53 @@ class Hangman:
                           'img6': self.image6,
                           'img7': self.image7
                           }
+        # uses an alogrithm to find a specific file in accordance to the guesses
         img_select = f"img{abs(self.guess-7)}"
         self.hangmanimage.configure(image=self.imag_dict[img_select])
+
     def save_highscores(self):
         """
         Saves highscores to file by converting dictionary to file lines
 
         returns: None
         """
-        count=0
+        count = 0
         # Sorts the dictionary such that highervalues are printed first
-        sorted_dict = dict(sorted(self.highscorers.items(),key=lambda x:x[1], reverse=True))
+        sorted_dict = dict(sorted(self.highscorers.items(),
+                           key=lambda x: x[1], reverse=True))
         # seeks to the starting of the file to allow truncating the whole file
         self.highscorefile.seek(0)
         # clears the whole file
         self.highscorefile.truncate(0)
         self.highscorefile.flush()
         for user, score in sorted_dict.items():
-            if count<3:
+            if count < 3:
                 self.highscorefile.write(f"{user},{score}\n")
-            
+
                 self.highscorefile.flush()
-                count+=1
+                count += 1
 
 # -------------------------------------------------------------------------------------------------------------------------------------------------------------------
-#-----------------------------------------------------------------------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------------------------------------------------------------------------
-#                                                  
-#                                               x--------------------------MAIN CODE-----------------------x                            
+# -------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#
+#                                               x-----------------------CODE FOR INITIALIZATION OF GAME-----------------------x
 
+# starts the game
 def play():
-    startingwindow.destroy()
+    try:
+        startingwindow.destroy()
+        s_word = secret_word()
+        hangman_game = Hangman(s_word)
+        print(s_word)
+        hangman_game.run()
+    except:
+        s_word = secret_word()
+        hangman_game = Hangman(s_word)
+        print(s_word)
+        hangman_game.run()
+        
 
 
 def secret_word():
@@ -692,14 +745,16 @@ def secret_word():
     words = fileref.read().split(" ")
     return random.choice(words)
 
-
+# Starting window for the game disconnected from the class
 startingwindow = Tk()
-startingwindow.config(bg="#323232", padx=30, pady=200)
+startingwindow.configure(bg="#323232", padx=30, pady=200)
 startingwindow.title("Welcome To Hangman")
 startingwindow.minsize(width=1280, height=1024)
 img = PhotoImage(file="CODE\\hangmanlogo.png")
-imagelabel = Label(startingwindow, image=img, state="normal")
+imagelabel = Label(startingwindow, image=img, state="normal",bd=0)
 imagelabel.pack()
+
+# play button
 playbutton = Button(startingwindow,
                     text='Play',
                     padx=30,
@@ -708,7 +763,3 @@ playbutton = Button(startingwindow,
                     command=play)
 playbutton.pack()
 startingwindow.mainloop()
-s_word = secret_word()
-hangman_game = Hangman(s_word)
-print(s_word)
-hangman_game.run()
