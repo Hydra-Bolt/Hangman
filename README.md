@@ -12,7 +12,7 @@ A simple Hangman game made with tkinter.
 Clone the project
 
 ```bash
-  git clone https://link-to-project
+  git clone https://github.com/Hydra-Bolt/Hangman/tree/master
 ```
 
 Go to the project directory
@@ -25,7 +25,7 @@ Go to the project directory
 Run the main python file
 
 ```bash
-  python Hangmanrun.py
+  python HangmanMain.py
 ```
 
 
@@ -44,7 +44,7 @@ For support, email ahmed4507537@cloud.neduet.edu.pk.
 To run tests, run the following command
 
 ```bash
-  python Hangmanrun.py
+  python HangmanMain.py
 ```
 
 ## Color Reference

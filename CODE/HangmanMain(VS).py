@@ -758,7 +758,7 @@ def secret_word():
         return random.choice(hardwords)
 # Starting window for the game disconnected from the class
 startingwindow = Tk()
-startingwindow.configure(bg="#323232", padx=30, pady=200)
+startingwindow.configure(bg="#323232", padx=30, pady=20)
 startingwindow.title("Welcome To Hangman")
 startingwindow.minsize(width=1280, height=1024)
 img = PhotoImage(file="CODE\\hangmanlogo.png")
