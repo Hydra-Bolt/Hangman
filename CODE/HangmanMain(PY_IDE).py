@@ -241,10 +241,8 @@ class Hangman:
         self.maingame = Tk()
         self.maingame.configure(
             background="#323232",
-            height=600,
             padx=30,
-            pady=30,
-            width=800)
+            pady=30)
 
         self.maingame.title("Hangman")
         self.alphabet_entry = Entry(self.maingame)
