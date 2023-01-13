@@ -2,7 +2,7 @@
 from tkinter import *
 import random
 import tkinter.messagebox as msgbox
-import time
+
 
 
 class Hangman:
@@ -659,7 +659,7 @@ class Hangman:
 
         """
         goodbyewindow = Tk()
-        goodbyewindow.title("Goodbye\u1F44")
+        goodbyewindow.title("Goodbye")
         goodbyewindow.configure(background='#323232')
         goodbyelabel = Label(goodbyewindow)
         goodbyelabel.configure(
@@ -669,7 +669,7 @@ class Hangman:
             foreground="#F8F8F6")
         goodbyelabel.pack()
         goodbyeimage = PhotoImage(
-            master=goodbyewindow, file="CODE\\goodbye.gif")
+            master=goodbyewindow, file="CODE\\goodbye.PNG")
         goodbyeimagelabel = Label(goodbyewindow,
             image=goodbyeimage,
             text="Good Bye", 
@@ -678,6 +678,10 @@ class Hangman:
             background="#323232",
             foreground="#F8F8F6")
         goodbyeimagelabel.pack()
+        self.wordfile.close()
+        self.adminfile.close()
+        self.userfile.close()
+        self.highscorefile.close()
         goodbyewindow.mainloop()
 
     def displayimage(self):
@@ -743,18 +747,49 @@ def play():
 def secret_word():
     fileref = open('files\\words.txt')
     words = fileref.read().split(" ")
-    return random.choice(words)
-
+    if x.get()==0:
+        easywords = [word for word in words if len(word)<=5]
+        return random.choice(easywords)
+    elif x.get()==1:
+        mediumwords = [word for word in words if 5<len(word)<=7]
+        return random.choice(mediumwords)
+    else:
+        hardwords = [word for word in words if len(word) > 7]
+        return random.choice(hardwords)
 # Starting window for the game disconnected from the class
 startingwindow = Tk()
 startingwindow.configure(bg="#323232", padx=30, pady=200)
 startingwindow.title("Welcome To Hangman")
 startingwindow.minsize(width=1280, height=1024)
 img = PhotoImage(file="CODE\\hangmanlogo.png")
-imagelabel = Label(startingwindow, image=img, state="normal",bd=0)
+imagelabel = Label(startingwindow,
+                    image=img,
+                    state="normal",
+                    bd=0, text="Select Difficulty",
+                    compound=TOP,
+                    bg="#323232",
+                    fg="#F8F8F6",
+                    font=("Cartograph CF", 14))
 imagelabel.pack()
 
 # play button
+difficulty = ["Easy", "Medium", "Hard"]
+
+x = IntVar()
+
+for i in range(len(difficulty)):
+    radiobutton = Radiobutton(  startingwindow,
+                                text = difficulty[i],
+                                variable=x,
+                                value=i,
+                                padx=30,
+                                pady=10,
+                                bg="#323232",
+                                fg="#F8F8F6",
+                                font=("Cartograph CF", 14),
+                                selectcolor='#323232')
+    radiobutton.pack()
+
 playbutton = Button(startingwindow,
                     text='Play',
                     padx=30,
