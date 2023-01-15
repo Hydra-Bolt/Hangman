@@ -22,10 +22,10 @@ class Hangman:
         # defining class variables
 
 
-        self.wordfile = open('files\\words.txt', "r+")
-        self.userfile = open("files\\users.txt", "r+")
-        self.adminfile = open("files\\admins.txt", "r+")
-        self.highscorefile = open("files\\highscores.csv", "r+")
+        self.wordfile = open('../files/words.txt', "r+")
+        self.userfile = open("../files/users.txt", "r+")
+        self.adminfile = open("../files/admins.txt", "r+")
+        self.highscorefile = open("../files/highscores.csv", "r+")
         self.usersl = [user.strip().split(",")
                        for user in self.userfile.readlines()]
         self.adminsl = [admin.strip().split(",")
@@ -241,10 +241,10 @@ class Hangman:
         self.maingame = Tk()
         self.maingame.configure(
             background="#323232",
-            height=600,
+            width=244,
+            height=144,
             padx=30,
-            pady=30,
-            width=800)
+            pady=30)
 
         self.maingame.title("Hangman")
         self.alphabet_entry = Entry(self.maingame)
@@ -269,19 +269,19 @@ class Hangman:
 
         # Defining image of hangman
         self.image1 = PhotoImage(
-            file="CODE\\images\\hangman1.png", master=self.maingame)
+            file="./images/hangman1.png", master=self.maingame)
         self.image2 = PhotoImage(
-            file="CODE\\images\\hangman2.png", master=self.maingame)
+            file="./images/hangman2.png", master=self.maingame)
         self.image3 = PhotoImage(
-            file="CODE\\images\\hangman3.png", master=self.maingame)
+            file="./images/hangman3.png", master=self.maingame)
         self.image4 = PhotoImage(
-            file="CODE\\images\\hangman4.png", master=self.maingame)
+            file="./images/hangman4.png", master=self.maingame)
         self.image5 = PhotoImage(
-            file="CODE\\images\\hangman5.png", master=self.maingame)
+            file="./images/hangman5.png", master=self.maingame)
         self.image6 = PhotoImage(
-            file="CODE\\images\\hangman6.png", master=self.maingame)
+            file="./images/hangman6.png", master=self.maingame)
         self.image7 = PhotoImage(
-            file="CODE\\images\\hangmanloss.png", master=self.maingame)
+            file="./images/hangmanloss.png", master=self.maingame)
 
         self.displayword.grid(row=5, column=3)
         self.guessedlwordslabel = Label(self.maingame)
@@ -315,7 +315,7 @@ class Hangman:
             text=f'Warnings remaining: {self.warning}')
         self.warnings.grid(column=0, pady=20, row=10)
         self.hangmanimage = Label(self.maingame)
-        self.img_hangmanlogo = PhotoImage(file="CODE\\images\\hangman1.png")
+        self.img_hangmanlogo = PhotoImage(file="./images/hangman1.png")
         self.hangmanimage.configure(image=self.img_hangmanlogo)
         self.hangmanimage.grid(column=0, row=0, rowspan=9)
         self.checkbutton = Button(self.maingame,
@@ -405,7 +405,7 @@ class Hangman:
         Allows opening of highscores:
 
         returns: None"""
-        self.highscorefile = open("files\\highscores.csv", "r+")
+        self.highscorefile = open("../files/highscores.csv", "r+")
         self.high = self.highscorefile.read()
         self.highscores_txt.insert(END, self.high)
 
@@ -669,7 +669,7 @@ class Hangman:
             foreground="#F8F8F6")
         goodbyelabel.pack()
         goodbyeimage = PhotoImage(
-            master=goodbyewindow, file="CODE\\goodbye.PNG")
+            master=goodbyewindow, file="goodbye.PNG")
         goodbyeimagelabel = Label(goodbyewindow,
             image=goodbyeimage,
             text="Good Bye", 
@@ -745,7 +745,7 @@ def play():
 
 
 def secret_word():
-    fileref = open('files\\words.txt')
+    fileref = open('../files/words.txt')
     words = fileref.read().split(" ")
     if x.get()==0:
         easywords = [word for word in words if len(word)<=5]
@@ -761,7 +761,7 @@ startingwindow = Tk()
 startingwindow.configure(bg="#323232", padx=30, pady=20)
 startingwindow.title("Welcome To Hangman")
 startingwindow.minsize(width=1280, height=1024)
-img = PhotoImage(file="CODE\\hangmanlogo.png")
+img = PhotoImage(file="hangmanlogo.png")
 imagelabel = Label(startingwindow,
                     image=img,
                     state="normal",
