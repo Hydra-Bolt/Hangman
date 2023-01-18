@@ -140,7 +140,8 @@ class Hangman:
         '''
         Allows main window to run.
         Takes no parameters
-        returns: None'''
+        returns: None
+        '''
         self.loginwindow.mainloop()
 
     def admin_login(self):
