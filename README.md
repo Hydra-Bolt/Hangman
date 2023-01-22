@@ -44,7 +44,14 @@ For support, email ahmed4507537@cloud.neduet.edu.pk.
 To run tests, run the following command
 
 ```bash
-  python HangmanMain.py
+  python HangmanMain_VS.py
+```
+## Running Tests for IDE
+
+To run tests, run the following command
+
+```bash
+  python HangmanMain_IDE.py
 ```
 
 ## Color Reference
