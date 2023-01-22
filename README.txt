@@ -14,13 +14,13 @@ How to run?
 
 Following steps can be taken in order to have a smooth exprience in running the game.
 
-1. Right Click the project folder and Open with VScode/Open with PYcharm.
+1. Right Click the project folder (Make sure that this folder has many folders not one) and Open with VScode/Open with PYcharm.
 
-2. Expand the CODE folder.
+2. In the code editor or the IDE, Expand the CODE folder.
 
-3. If you are running on VScode run HangmanMain_VS.py
+3. If you are running on VScode open and run HangmanMain_VS.py
 
-4. If you are running on PyCharm or Other IDE run HangmanMain_IDE.py
+4. If you are running on PyCharm or Other IDE open and run HangmanMain_IDE.py
 
 =================================================================================
 
@@ -34,6 +34,12 @@ For logging in as User or Admin follow these steps:
 
 =================================================================================
 
+WARNING!:
+
+    DO NOT TAMPER WITH THE FILES AS THEY CONTAIN SENSITIVE DATA THAT COUlD RESULT IN ERRORS IN THE CODE 
+
+
+=================================================================================
 
 Having Issues?
 
@@ -43,4 +49,5 @@ Having Issues?
 
 3. Contact at ahmed4507537@cloud.neduet.edu.pk
 
+4. A GitHub repositry has also been made for the project contact ahmed4507537@cloud.neduet.edu.pk to be invited.
  

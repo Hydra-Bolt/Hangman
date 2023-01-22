@@ -1,8 +1,7 @@
 #!/usr/bin/python3
-from tkinter import *
+from tkinter import Label, Button, Frame, Tk, Entry, PhotoImage, END, Text, TOP, IntVar, Radiobutton
 import random
 import tkinter.messagebox as msgbox
-
 
 
 class Hangman:
@@ -11,21 +10,25 @@ class Hangman:
     """
 
     def __init__(self,
-                 secret_word: str):
+                 secret_word: str,
+                 image: PhotoImage):
         """ 
         Initializes the main login window.
         Initializes class Variables.
         :params:
             :secret word: str| A string is designated as secret word with instantiazation of class
+            :image: PhotoImage| An Image is inputted into the class
             """
 
         # defining class variables
-
+        self.frequencies = ['e', 's', 'i', 'a', 'r', 'n', 't', 'o', 'l', 'd', 'c', 'u', 'g', 'p', 'm', 'h', 'b', 'y', 'f', 'k', 'v', 'w', 'z', 'x', 'j', 'q']
+        self.icon = image
 
         self.wordfile = open('../files/words.txt', "r+")
         self.userfile = open("../files/users.txt", "r+")
         self.adminfile = open("../files/admins.txt", "r+")
         self.highscorefile = open("../files/highscores.csv", "r+")
+        self.words = self.wordfile.read().split()
         self.usersl = [user.strip().split(",")
                        for user in self.userfile.readlines()]
         self.adminsl = [admin.strip().split(",")
@@ -45,7 +48,8 @@ class Hangman:
         self.guess = 6
         self.warning = 3
         self.guessed_aplha = ""
-        # LoginWindow defined
+        # LoginWindow defineds
+
         self.loginwindow = Tk()
         self.loginwindow.configure(
             background="#323232",
@@ -140,8 +144,7 @@ class Hangman:
         '''
         Allows main window to run.
         Takes no parameters
-        returns: None
-        '''
+        returns: None'''
         self.loginwindow.mainloop()
 
     def admin_login(self):
@@ -183,6 +186,7 @@ class Hangman:
         return: None"""
 
         # Register Window Initialized
+        
         self.register_window = Tk()
         self.register_window.configure(bg="#323232")
         self.register_window.minsize(width=800, height=600)
@@ -203,26 +207,26 @@ class Hangman:
         self.register_username = Entry(self.register_frame)
         self.register_username.configure(font=("Cartograph CF", 12), width=30)
         self.register_username.delete("0", "end")
-        self.register_username.insert("0", 'Enter Username')
+        self.register_username.insert("0", 'Username')
         self.register_username.pack(pady=3, side="top")
 
         self.register_firstname = Entry(self.register_frame)
         self.register_firstname.configure(font=("Cartograph CF", 12), width=30)
         self.register_firstname.delete("0", "end")
-        self.register_firstname.insert("0", 'Enter First Name')
+        self.register_firstname.insert("0", 'First Name')
         self.register_firstname.pack(pady=3, side="top")
 
         self.register_lastname = Entry(self.register_frame)
         self.register_lastname.configure(font=("Cartograph CF", 12), width=30)
         self.register_lastname.delete("0", "end")
-        self.register_lastname.insert("0", 'Enter Last Name')
+        self.register_lastname.insert("0", 'Last Name')
         self.register_lastname.pack(pady=3, side="top")
 
         # Register Entry for password
         self.register_password = Entry(self.register_frame)
         self.register_password.configure(font=("Cartograph CF", 12), width=30)
         self.register_password.delete("0", "end")
-        self.register_password.insert("0", 'Enter Password')
+        self.register_password.insert("0", 'Password')
         self.register_password.pack(padx=3, side="top")
 
         # Register Submit Button
@@ -242,22 +246,23 @@ class Hangman:
         self.maingame = Tk()
         self.maingame.configure(
             background="#323232",
-            width=244,
-            height=144,
+            width = 244,
+            height = 144,
             padx=30,
             pady=30)
-
         self.maingame.title("Hangman")
         self.alphabet_entry = Entry(self.maingame)
         self.alphabet_entry.configure(font=("Cartograph CF", 25), width=7)
-        self.alphabet_entry.grid(column=1, columnspan=6, row=1)
+        self.alphabet_entry.grid(column=2, row=0)
+
         self.alphabet = Label(self.maingame)
         self.alphabet.configure(
+            padx=20,
             background="#323232",
             font=("Cartograph CF", 20),
             foreground="#F8F8F6",
-            text='Enter an alphabet')
-        self.alphabet.grid(column=1, columnspan=5, padx=30, row=0)
+            text='Enter an alphabet --->')
+        self.alphabet.grid(column=1, row=0)
 
         self.displayword = Label(self.maingame)
         self.displayword.configure(
@@ -284,7 +289,7 @@ class Hangman:
         self.image7 = PhotoImage(
             file="./images/hangmanloss.png", master=self.maingame)
 
-        self.displayword.grid(row=5, column=3)
+        self.displayword.grid(row=1, column=1, columnspan=2, padx=30)
         self.guessedlwordslabel = Label(self.maingame)
         self.guessedlwordslabel.configure(
             background="#323232",
@@ -294,31 +299,39 @@ class Hangman:
             text=f"The length of the word is {len(self.s_word)}\nGuessed Words:",
             padx=10
         )
-        self.guessedlwordslabel.grid(column=3, row=2)
+        self.guessedlwordslabel.grid(column=1, row=2, columnspan=2)
         self.guessed = Label(self.maingame)
         self.guessed.configure(background="#323232",
                                foreground="#F8F8F6",
                                font=("Cartograph CF", 14, "bold"),
-                               text=self.guessed_aplha)
-        self.guessed.grid(column=3, row=4)
-        self.guesses = Label(self.maingame)
+                               text=",".join([self.guessed_aplha]))
+        self.guessed.grid(column=1, row=3, columnspan=2)
+        self.guessable = Label(self.maingame)
+        self.guessable.configure(background="#323232",
+            font=("Cartograph CF", 14, "bold"),
+            foreground="#F8F8F6",
+            text ="Suggested Guesses: " + ','.join(self.goodguesses()))
+        self.guessable.grid(column=1, row=4, columnspan=2)
+        self.guesses = Label(self.maingame,)
         self.guesses.configure(
             background="#323232",
             font=("Cartograph CF", 14, "bold"),
             foreground="#F8F8F6",
             text=f'Guesses remaining:  {self.guess}')
-        self.guesses.grid(column=0, pady=20, row=9)
+        self.guesses.grid(column=1, row=5)
+        
         self.warnings = Label(self.maingame)
         self.warnings.configure(
             background="#323232",
             font=("Cartograph CF", 14, "bold"),
             foreground="#F8F8F6",
-            text=f'Warnings remaining: {self.warning}')
-        self.warnings.grid(column=0, pady=20, row=10)
+            text=f', Warnings remaining: {self.warning}')
+        self.warnings.grid(column=2, row=5)
+
         self.hangmanimage = Label(self.maingame)
-        self.img_hangmanlogo = PhotoImage(file="./images/hangman1.png")
-        self.hangmanimage.configure(image=self.img_hangmanlogo)
-        self.hangmanimage.grid(column=0, row=0, rowspan=9)
+        self.img_hangmanlogo = PhotoImage(file="./images/hangman1.png", master=self.maingame)
+        self.hangmanimage.configure(image=self.img_hangmanlogo,padx=5)
+        self.hangmanimage.grid(column=0, row=0, rowspan=7)
         self.checkbutton = Button(self.maingame,
                                   text='Guess Letter',
                                   padx=30,
@@ -326,8 +339,7 @@ class Hangman:
                                   font=("Cartograph CF", 14),
                                   command=self.check_word
                                   )
-        self.checkbutton.grid(column=3, row=6)
-
+        self.checkbutton.grid(column=1, row=6, columnspan=2)
         # Binds enter button to the entry box
         self.alphabet_entry.bind("<Return>", lambda call_event: self.check_word()) # here lambda is used to pass the a function such that a function is called by a function
         self.maingame.mainloop()
@@ -348,12 +360,21 @@ class Hangman:
         self.wordbox = Entry(self.adminwindow)
         self.wordbox.configure(font=("Cartograph CF", 15))
         self.wordbox.grid(row=1, column=2)
-
+        self.instructions = Label(self.adminwindow)
+        self.instructions.configure(
+                                 text='Enter words each seperated by a space',
+                                  padx=30,
+                                  pady=10,
+                                  font=("Cartograph CF", 14),
+                                  background="#323232",
+                                  foreground="#F8F8F6"
+        )
+        self.instructions.grid(row=2,column=2)
         # Save to file button  for words
         self.save_button = Button(self.adminwindow)
         self.save_button.configure(
             state="normal", text='Save Words', font=("Cartograph CF", 15))
-        self.save_button.grid(column=2, ipadx=20, pady=20, row=2)
+        self.save_button.grid(column=2, ipadx=20, pady=20, row=3)
         self.save_button.configure(command=self.save_words)
 
         # Text Box for highscores
@@ -389,13 +410,13 @@ class Hangman:
         self.save_highscore.configure(text='Reset Highscores',
                                       fg="#323232",
                                       font=("Cartograph CF", 15))
-        self.save_highscore.grid(column=0, ipadx=20, pady=20, row=2)
+        self.save_highscore.grid(column=0, ipadx=20, pady=20, row=3)
         self.save_highscore.configure(command=self.reset_high)
         self.open_highscore = Button(self.adminwindow)
         self.open_highscore.configure(text='Open Highscores',
                                       fg="#323232",
                                       font=("Cartograph CF", 15))
-        self.open_highscore.grid(column=1, ipadx=20, pady=20, row=2)
+        self.open_highscore.grid(column=1, ipadx=20, pady=20, row=3)
         self.open_highscore.configure(command=self.open_highscores)
         self.adminwindow.rowconfigure(0, pad=33)
         self.adminwindow.mainloop()
@@ -417,12 +438,16 @@ class Hangman:
 
         returns: None"""
 
-        addition = self.wordbox.get()
-        msgbox.askokcancel(title="Word Addition",
-                           message=f"Added the Word: {addition}")
-        self.wordfile.seek(len(self.wordfile.read()))
-        self.wordfile.write(f" {addition}")
-        self.wordfile.flush()
+        additions = self.wordbox.get().split()
+        for addition in additions:
+            if addition not in self.words:
+                msgbox.askokcancel(title="Word Addition",
+                                message=f"Added the Word: {addition}")
+                self.wordfile.seek(0, 2)
+                self.wordfile.write(f" {addition}")
+                self.wordfile.flush()
+            else:
+                msgbox.showerror(title="Word Addition", message=f"The Word: {addition} is already in the file")
 
     def reset_high(self):
         """
@@ -430,9 +455,9 @@ class Hangman:
         Allows admin to reset the highscore and delete every highscore"""
         self.highscorefile.truncate(0)
         self.highscorefile.flush()
-        self.highscores_txt.delete(0, END)
-        self.highscores_txt.insert(0, "")
-        msgbox.showinfo(title='Successfull', text="Reset Higsores")
+        self.highscores_txt.delete(1.0, END)
+        self.highscores_txt.insert(1.0, "")
+        msgbox.showinfo(title='Successfull', message="Reset Higsores")
 
     def obscureword(self):
         """
@@ -459,14 +484,18 @@ class Hangman:
         Adds the user by taking key details from entry box.
 
         returns: None """
+        
         self.current_username = self.register_username.get()
         firstname = self.register_firstname.get()
         lastname = self.register_lastname.get()
         password = self.register_password.get()
-        if len(self.current_username) <= 4:
+        if self.current_username in self.users.keys():
+            msgbox.showerror(
+                title="Error", message=self.current_username+" is already a registered user\n\n Try a different username")
+        elif len(self.current_username) <= 4:
             msgbox.showerror(
                 title="Error", message="Length of username should at least be 4 characters long")
-        elif len(password) <= 8:
+        elif len(password) < 8:
             msgbox.showerror(
                 title="Error", message="password should atleast be 8 character long")
         else:
@@ -482,71 +511,81 @@ class Hangman:
             self.game()
 
     def check_word(self):
+        
         """
-        Submethod of func(game).
-        Checks if:\n
-            -Guessed word is allowed\n
-            -Guessed word is in the secret word\n
-            -User has Won or Lost\n
+        Submethod of func(game). 
+        Takes in the user's guess and checks if it is valid (i.e. a single letter that has not been guessed before).
+        It also checks if the guess is in the secret word and updates the game state accordingly (e.g. decrementing the number of guesses remaining).
+        The method also checks if the user has won or lost the game and displays appropriate messages.
+        The method does not return any value, it only updates the game state and displays messages to the user.
+        """
 
-        returns: None
-        """
+        # get the user's input and lowercase it
         self.G = self.alphabet_entry.get().lower()
         self.alphabet_entry.delete(0, END)
         self.alphabet_entry.insert(0, "")
 
+        # check if the input is a single letter or not
         if len(self.G) != 1:
             msgbox.showerror(
                 title="Guess", message="Guesses should be a letter(only one character)!")
             return None
 
+        # check if the letter was already guessed before
         if self.G in self.guessed_aplha:
             msgbox.showerror(title="Guess", message="Already Guessed")
             if self.warning < 1:
                 self.guess -= 1
-                self.guesses.configure(text=f"Guesses remaining: {self.guess}")
-                self.displayimage()
+                self.guesses.configure(text=f"  Guesses remaining: {self.guess}")
+                if self.guess>=1 : self.displayimage()
             else:
                 self.warning -= 1
             self.warnings.configure(text=f"Warnings remaining: {self.warning}")
 
-        elif (len(self.G) == 1) and (self.G in self.s_word):
+        # check if the letter is in the secret word
+        elif (self.G in self.s_word):
             msgbox.showinfo(
                 title="Guess", message=f"Good Job! ' {self.G} ' is in the Word")
             self.guessed_aplha += self.G
+            self.guessable.configure(text ="Suggested Guesses: " + ','.join(self.goodguesses()))
 
-        elif (len(self.G) == 1) and (self.G not in self.s_word) and (self.G.isalpha()):
+        # check if the letter is not in the secret word
+        elif (self.G not in self.s_word) and (self.G.isalpha()):
             msgbox.showinfo(title="Guess", message="Too Bad not in the word")
             self.guessed_aplha += self.G
+            self.guessable.configure(text ="Suggested Guesses: " + ','.join(self.goodguesses()))
             if self.G in "aeiou":
                 self.guess -= 2
             else:
                 self.guess -= 1
             self.guesses.configure(text=f"Guesses remaining: {self.guess}")
-            self.displayimage()
+            if self.guess>=1 : self.displayimage()
 
+        # check if the input is not an alphabet
         else:
             msgbox.showerror(title="Guess", message="We only allow alphabets")
             if self.warning < 1:
                 self.guess -= 1
                 self.guesses.configure(text=f"Guesses remaining: {self.guess}")
-                self.displayimage()
+                if self. guess>=1 : self.displayimage()
 
             else:
                 self.warning -= 1
             self.warnings.configure(text=f"Warnings remaining: {self.warning}")
         self.displayword.configure(text=self.obscureword())
-        self.guessed.configure(text=self.guessed_aplha)
-
+        self.guessed.configure(text=",".join([*self.guessed_aplha]))
+        self.displayimage()
+        # check if the user has run out of guesses
         if self.guess < 1:
             msgbox.showinfo(title="GAME OVER", message="G A M E  O V E R")
             msgbox.showinfo(
                 title="Sorry", message=f"The word was: {self.s_word}")
             self.lostgame()
+        # check if the user has correctly guessed the secret word
         if self.obscureword() == self.prep_secret():
             msgbox.showinfo(title=f"CONGRAGULATIONS {self.current_username}", message="You Won!")
             self.wongame()
-
+    
     def lostgame(self):
         """
         Submethod of func(check_word).
@@ -559,9 +598,12 @@ class Hangman:
             title="Try Again?", message="Want to Try Again?")
         self.maingame.destroy()
         if decision:
-            s_word = secret_word()
-            hangman = Hangman(s_word)
-            hangman.run()
+            self.guess = 6
+            self.warning = 3
+            self.guessed_aplha=""
+            self.s_word = secret_word()
+
+            self.game()
         else:
             self.goodbye()
 
@@ -586,7 +628,7 @@ class Hangman:
         self.won = Label(self.wonwindow)
         self.won.configure(
             background="#323232",
-            font=("Cartograph CF", 48),
+            font=("Cartograph CF", 38),
             foreground="#F8F8f6",
             text='YOU WON!')
         self.won.pack(side="top")
@@ -594,7 +636,7 @@ class Hangman:
         # Score Label
         self.scorelabel = Label(self.wonwindow,
                                 background="#323232",
-                                font=("Cartograph CF", 48),
+                                font=("Cartograph CF", 38),
                                 foreground="#F8F8f6",
                                 text=f"YOUR SCORE IS {self.score}")
         if len(self.highscores) == 0 or self.score > int(max(self.highscores)):
@@ -606,7 +648,7 @@ class Hangman:
         # Highscore label
         self.highscorelabel = Label(self.wonwindow,
                                     background="#323232",
-                                    font=("Cartograph CF", 48),
+                                    font=("Cartograph CF", 38),
                                     foreground="#F8F8f6",
                                     text="Top Highscores")
         self.highscorelabel.pack()
@@ -632,12 +674,14 @@ class Hangman:
         self.highscores_txt.pack()
         
         dec = msgbox.askyesno(title="Play Again?", message='Do you want to play again?')
-        print(type(dec))
+        self.wonwindow.destroy()
         if dec:
-            self.wonwindow.destroy()
-            play()
+            self.guess = 6
+            self.warning = 3
+            self.guessed_aplha=""
+            self.s_word = secret_word()
+            self.game()
         else:
-            self.wonwindow.destroy()
             self.goodbye()
 
     def uniques(self):
@@ -661,7 +705,9 @@ class Hangman:
         """
         goodbyewindow = Tk()
         goodbyewindow.title("Goodbye")
+        goodbyewindow.minsize(width=800, height=600)
         goodbyewindow.configure(background='#323232')
+
         goodbyelabel = Label(goodbyewindow)
         goodbyelabel.configure(
             text="Thanks For Playing",
@@ -670,14 +716,10 @@ class Hangman:
             foreground="#F8F8F6")
         goodbyelabel.pack()
         goodbyeimage = PhotoImage(
-            master=goodbyewindow, file="goodbye.PNG")
+            master=goodbyewindow, file="./images/goodbye.PNG")
         goodbyeimagelabel = Label(goodbyewindow,
             image=goodbyeimage,
-            text="Good Bye", 
-            compound=TOP,
-            font=("Cartograph CF", 32),
-            background="#323232",
-            foreground="#F8F8F6")
+            bd=0)
         goodbyeimagelabel.pack()
         self.wordfile.close()
         self.adminfile.close()
@@ -697,7 +739,11 @@ class Hangman:
                           'img7': self.image7
                           }
         # uses an alogrithm to find a specific file in accordance to the guesses
+
         img_select = f"img{abs(self.guess-7)}"
+        if abs(self.guess-7)>7:
+            self.hangmanimage.configure(image=self.imag_dict['img7'])
+
         self.hangmanimage.configure(image=self.imag_dict[img_select])
 
     def save_highscores(self):
@@ -721,7 +767,15 @@ class Hangman:
 
                 self.highscorefile.flush()
                 count += 1
-
+    # good guesses based on current gussed letters
+    def goodguesses(self):
+        hints = [i for i in self.frequencies if i not in self.guessed_aplha]
+        if x.get()==0:
+            return hints[:5]
+        elif x.get()==1:
+            return hints[:3]
+        elif x.get()==2:
+            return ["not avaliable on Hard Difficulty"]
 # -------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -731,18 +785,10 @@ class Hangman:
 
 # starts the game
 def play():
-    try:
-        startingwindow.destroy()
-        s_word = secret_word()
-        hangman_game = Hangman(s_word)
-        print(s_word)
-        hangman_game.run()
-    except:
-        s_word = secret_word()
-        hangman_game = Hangman(s_word)
-        print(s_word)
-        hangman_game.run()
-        
+    startingwindow.destroy()
+    s_word = secret_word()
+    hangman_game = Hangman(s_word,icon)
+    hangman_game.run()
 
 
 def secret_word():
@@ -762,7 +808,9 @@ startingwindow = Tk()
 startingwindow.configure(bg="#323232", padx=30, pady=20)
 startingwindow.title("Welcome To Hangman")
 startingwindow.minsize(width=1280, height=1024)
-img = PhotoImage(file="hangmanlogo.png")
+img = PhotoImage(file="./images/hangmanlogo.png")
+icon = PhotoImage(file="./images/hangmanicontrue.png")
+startingwindow.iconphoto(True, icon)
 imagelabel = Label(startingwindow,
                     image=img,
                     state="normal",
@@ -773,14 +821,19 @@ imagelabel = Label(startingwindow,
                     font=("Cartograph CF", 14))
 imagelabel.pack()
 
-# play button
+# Difficulty Setting
 difficulty = ["Easy", "Medium", "Hard"]
 
 x = IntVar()
-
+easyimage = PhotoImage(file="./images/easy.png",master=startingwindow)
+mediumimage = PhotoImage(file="./images/medium.png",master=startingwindow)
+hardimage = PhotoImage(file="./images/hard.png",master=startingwindow)
+images = [easyimage,mediumimage,hardimage]
 for i in range(len(difficulty)):
     radiobutton = Radiobutton(  startingwindow,
                                 text = difficulty[i],
+                                image=images[i],
+                                compound="left",
                                 variable=x,
                                 value=i,
                                 padx=30,
@@ -798,4 +851,5 @@ playbutton = Button(startingwindow,
                     font=("Cartograph CF", 14),
                     command=play)
 playbutton.pack()
+
 startingwindow.mainloop()

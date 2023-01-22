@@ -574,6 +574,7 @@ class Hangman:
         self.displayword.configure(text=self.obscureword())
         self.guessed.configure(text=",".join([*self.guessed_aplha]))
         self.displayimage()
+
         # check if the user has run out of guesses
         if self.guess < 1:
             msgbox.showinfo(title="GAME OVER", message="G A M E  O V E R")
@@ -704,7 +705,9 @@ class Hangman:
         """
         goodbyewindow = Tk()
         goodbyewindow.title("Goodbye")
+        goodbyewindow.minsize(width=800, height=600)
         goodbyewindow.configure(background='#323232')
+
         goodbyelabel = Label(goodbyewindow)
         goodbyelabel.configure(
             text="Thanks For Playing",
@@ -737,7 +740,11 @@ class Hangman:
                           }
         # uses an alogrithm to find a specific file in accordance to the guesses
         img_select = f"img{abs(self.guess-7)}"
-        self.hangmanimage.configure(image=self.imag_dict[img_select])
+        if abs(self.guess-7)>7:
+            self.hangmanimage.configure(image=self.imag_dict['img7'])
+
+        else: 
+            self.hangmanimage.configure(image=self.imag_dict[img_select])
 
     def save_highscores(self):
         """
@@ -781,7 +788,6 @@ def play():
     startingwindow.destroy()
     s_word = secret_word()
     hangman_game = Hangman(s_word,icon)
-    print(s_word)
     hangman_game.run()
 
 
@@ -847,3 +853,4 @@ playbutton = Button(startingwindow,
 playbutton.pack()
 
 startingwindow.mainloop()
+

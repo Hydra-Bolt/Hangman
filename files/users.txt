@@ -2,14 +2,3 @@ Username, First Name, Last Name, Password, Phone Number
 Maria,Maria,Waqas,maria123,03XXXXXXXXX
 Muneeb,Muneeb,Ahmed,muneeb123,033XXXXXXXX
 Kashif,Kashif,Asrar,asrar23,0312XXXXXXX
-Soof3,Soof,IIII,soofi44444
-muneeb,Muneeb,Ahmed,muneeb12333
-Mubashir,mubashir,ahmed,mubashir123
-Ummemaaz,umme,maaz,maaz12333
-maazahmed,Maaz,Ahmed,maaztati2
-tauseef,Tauseef,Ahmed,tauseef123
-moonib,muneeb,ahmed,123123123
-Enter Username,Enter First Name,Enter Last Name,Enter Password
-Username,First Name,Last Name,Password
-Username,First Name,Last Name,Password
-maria,muneeb,muneeb,muneeb123
